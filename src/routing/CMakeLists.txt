@@ -32,6 +32,7 @@ set(ROUTING_SOURCE_FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/dest_first_available.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/dest_next_available.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/dest_round_robin.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/dest_fabric_cache.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/routing.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/protocol/classic_protocol.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/connection.cc
@@ -50,6 +51,7 @@ set(include_dirs
   ${PROJECT_SOURCE_DIR}/src/router/include
   ${PROJECT_SOURCE_DIR}/src/routing/include
   ${PROJECT_SOURCE_DIR}/src/metadata_cache/include
+  ${PROJECT_SOURCE_DIR}/src/fabric_cache/include
   ${PROJECT_SOURCE_DIR}/src/mysql_protocol/include
   ${PROJECT_SOURCE_DIR}/src/x_protocol/include
   ${PROTOBUF_INCLUDE_DIR}
@@ -82,7 +84,7 @@ endif()
 # The Plugin
 add_harness_plugin(routing
         SOURCES ${ROUTING_PLUGIN_SOURCE_FILES} ${ROUTING_SOURCE_FILES}
-        REQUIRES mysql_protocol x_protocol metadata_cache)
+        REQUIRES mysql_protocol x_protocol metadata_cache fabric_cache)
 target_include_directories(routing PRIVATE ${include_dirs})
 
 if(MSVC)

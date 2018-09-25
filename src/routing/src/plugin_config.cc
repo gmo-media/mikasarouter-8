@@ -201,7 +201,7 @@ string RoutingPluginConfig::get_option_destinations(const mysql_harness::ConfigS
     auto uri = URI(value, // raises URIError when URI is invalid
         false  // allow_path_rootless
         );
-    if (uri.scheme == "metadata-cache") {
+    if (uri.scheme == "metadata-cache" || uri.scheme == "fabric+cache") {
       metadata_cache_ = true;
     } else {
       throw invalid_argument(

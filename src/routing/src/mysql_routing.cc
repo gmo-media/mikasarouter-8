@@ -31,9 +31,11 @@
 #include "dest_next_available.h"
 #include "dest_round_robin.h"
 #include "dest_metadata_cache.h"
+#include "dest_fabric_cache.h"
 #include "mysql/harness/logging/logging.h"
 #include "mysql_routing.h"
 #include "mysqlrouter/metadata_cache.h"
+#include "mysqlrouter/fabric_cache.h"
 #include "mysqlrouter/routing.h"
 #include "mysqlrouter/uri.h"
 #include "mysqlrouter/utils.h"
@@ -562,8 +564,20 @@ void MySQLRouting::set_destinations_from_uri(const URI &uri) {
                                                   routing_strategy_,
                                                   uri.query, context_.get_protocol().get_type(),
                                                   access_mode_));
+  } else if (uri.scheme == "fabric+cache") {
+    // Syntax: fabric+cache://<fabric_cache_section>/group/<group_name>
+    auto fabric_cmd = uri.path[0];
+    std::transform(fabric_cmd.begin(), fabric_cmd.end(), fabric_cmd.begin(), ::tolower);
+    if (fabric_cmd == "group") {
+      if (!fabric_cache::have_cache(uri.host)) {
+        throw runtime_error("Invalid Fabric Cache in URI; was '" + uri.host + "'");
+      }
+      destination_.reset(new DestFabricCacheGroup(uri.host, uri.path[1], access_mode_, uri.query));
+    } else {
+      throw runtime_error("Invalid Fabric command in URI; was '" + fabric_cmd + "'");
+    }
   } else {
-    throw runtime_error(string_format("Invalid URI scheme; expecting: 'metadata-cache' is: '%s'",
+    throw runtime_error(string_format("Invalid URI scheme; expecting: 'metadata-cache'/'fabric+cache' is: '%s'",
                                       uri.scheme.c_str()));
   }
 }
