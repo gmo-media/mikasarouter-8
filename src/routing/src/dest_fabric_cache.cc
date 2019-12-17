@@ -116,7 +116,7 @@ int DestFabricCacheGroup::get_server_socket(std::chrono::milliseconds connect_ti
       current_pos_ = 0;
     }
     return get_mysql_socket(available.at(next_up), connect_timeout);
-  } catch (fabric_cache::base_error) {
+  } catch ( std::runtime_error & re ) {
     log_error("Failed getting managed servers from Fabric");
   }
 
