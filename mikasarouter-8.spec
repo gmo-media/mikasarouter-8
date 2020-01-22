@@ -40,7 +40,7 @@
 Summary:       MySQL Router
 Name:          %{src_base}%{?product_suffix}
 Version:       8.0.12
-Release:       1%{?commercial:.1}%{?dist}
+Release:       2%{?commercial:.1}%{?dist}
 License:       Under %{?license_type} license as shown in the Description field.
 Group:         Applications/Databases
 URL:           https://dev.mysql.com/downloads/router/

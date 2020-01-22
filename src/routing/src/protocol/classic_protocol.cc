@@ -139,6 +139,17 @@ int ClassicProtocol::copy_packets(int sender, int receiver, bool sender_is_reada
           get_message_error(last_errno).c_str());
       return -1;
     }
+
+    /* patched by yoku0825 */
+    if (buffer[4] == 0xff && buffer[5] == 10 && buffer[6] == 5)
+    {
+      // FF means Error packet and 5 * 256 + 10 = 1290 ==> ER_OPTION_PREVENTS_STATEMENT(maybe read_only ERROR)
+      log_info("Connection will be closed because of server returns ER_OPTION_PREVENTS_STATEMENT");
+
+      // Close connection because it maybe demoted as slave.
+      return -1;
+    }
+    /* END patched */
   }
 
   *curr_pktnr = pktnr;
