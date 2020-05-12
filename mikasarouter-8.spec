@@ -40,7 +40,7 @@
 Summary:       MySQL Router
 Name:          %{src_base}%{?product_suffix}
 Version:       8.0.12
-Release:       2%{?commercial:.1}%{?dist}
+Release:       3%{?commercial:.1}%{?dist}
 License:       Under %{?license_type} license as shown in the Description field.
 Group:         Applications/Databases
 URL:           https://dev.mysql.com/downloads/router/
@@ -52,8 +52,8 @@ Source4:       mysqlrouter.conf
 BuildRequires: cmake
 %{?el6:BuildRequires:  devtoolset-6-gcc}
 %{?el6:BuildRequires:  devtoolset-6-gcc-c++}
-%{?el7:BuildRequires:  devtoolset-6-gcc}
-%{?el7:BuildRequires:  devtoolset-6-gcc-c++}
+%{?el7:BuildRequires:  devtoolset-7-gcc}
+%{?el7:BuildRequires:  devtoolset-7-gcc-c++}
 %if 0%{?commercial}
 Provides:      mysql-router = %{version}-%{release}
 Obsoletes:     mysql-router < %{version}-%{release}
@@ -106,8 +106,8 @@ necessary to develop MySQL Router applications.
 mkdir release && pushd release
 %{?el6:export CC=/opt/rh/devtoolset-6/root/usr/bin/gcc}
 %{?el6:export CXX=/opt/rh/devtoolset-6/root/usr/bin/g++}
-%{?el7:export CC=/opt/rh/devtoolset-6/root/usr/bin/gcc}
-%{?el7:export CXX=/opt/rh/devtoolset-6/root/usr/bin/g++}
+%{?el7:export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc}
+%{?el7:export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++}
 cmake .. -DINSTALL_LAYOUT=RPM \
   -DWITH_STATIC=yes -DWITH_MYSQL="%{with_mysql}" %{?project_edition} \
   -DWITH_LIBEVENT="%{with_libevent}" \
@@ -122,8 +122,8 @@ rm -rf %{buildroot}
 pushd release
 %{?el6:export CC=/opt/rh/devtoolset-6/root/usr/bin/gcc}
 %{?el6:export CXX=/opt/rh/devtoolset-6/root/usr/bin/g++}
-%{?el7:export CC=/opt/rh/devtoolset-6/root/usr/bin/gcc}
-%{?el7:export CXX=/opt/rh/devtoolset-6/root/usr/bin/g++}
+%{?el7:export CC=/opt/rh/devtoolset-7/root/usr/bin/gcc}
+%{?el7:export CXX=/opt/rh/devtoolset-7/root/usr/bin/g++}
 make DESTDIR=%{buildroot} install
 
 install -d -m 0755 %{buildroot}/%{_localstatedir}/log/mysqlrouter
