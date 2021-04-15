@@ -1,13 +1,15 @@
-MySQL Router 8.0
+mikasarouter-8
 ================
 
-This is a release of MySQL Router.
+This is a fork product of MySQL Router.
+Port fabric+cache plugin from MySQL Router 2.x series into MySQL Router 8.0.
 
 For the avoidance of doubt, this particular copy of the software
 is released under the version 2 of the GNU General Public License.
 MySQL Router is brought to you by Oracle.
 
 Copyright (c) 2015, 2018, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2018, 2020, GMO Media, Inc. All rights reserved.
 
 Documentation
 -------------
